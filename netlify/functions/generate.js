@@ -42,8 +42,8 @@ exports.handler = async (event, context) => {
             return {
                 statusCode: 400,
                 headers,
-                body: JSON.stringify({ 
-                    error: 'startDate and endDate are required' 
+                body: JSON.stringify({
+                    error: 'startDate and endDate are required'
                 })
             };
         }
@@ -85,10 +85,10 @@ exports.handler = async (event, context) => {
         return {
             statusCode: 500,
             headers,
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 success: false,
                 error: 'Failed to generate calendar',
-                details: error.message 
+                details: error.message
             })
         };
     }
