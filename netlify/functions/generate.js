@@ -26,6 +26,8 @@ exports.handler = async (event, context) => {
     }
 
     try {
+        console.log('Function called with body:', event.body);
+        
         const {
             startDate,
             endDate,
@@ -36,6 +38,8 @@ exports.handler = async (event, context) => {
             services,
             format = 'json'
         } = JSON.parse(event.body);
+        
+        console.log('Parsed data:', { startDate, endDate, countryCode, companyName, industry });
 
         // Validate required fields
         if (!startDate || !endDate) {
@@ -49,10 +53,20 @@ exports.handler = async (event, context) => {
         }
 
         // Initialize generator
+        console.log('Initializing generator...');
         const generator = new LinkedInPostGenerator();
+        console.log('Generator initialized successfully');
+
+        // Process services - convert string to array if needed
+        let processedServices = services;
+        if (typeof services === 'string') {
+            processedServices = services.split('\n').filter(s => s.trim()).map(s => s.trim());
+        } else if (!Array.isArray(services)) {
+            processedServices = [];
+        }
 
         // Set company information
-        await generator.setCompanyInfo(companyName, website, services, industry);
+        await generator.setCompanyInfo(companyName, website, processedServices, industry);
 
         // Generate calendar
         const calendar = await generator.generateCalendar(startDate, endDate, countryCode);

@@ -769,7 +769,7 @@
             document.getElementById('results').style.display = 'none';
             
             try {
-                const response = await fetch('/generate', {
+                const response = await fetch('/.netlify/functions/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1084,7 +1084,7 @@
             
             try {
                 const post = currentCalendar[postIndex];
-                const response = await fetch('/improve-post', {
+                const response = await fetch('/.netlify/functions/improve-post', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
