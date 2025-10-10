@@ -167,8 +167,16 @@ app.post('/generate', async (req, res) => {
             });
         }
 
+        // Process services - convert string to array if needed
+        let processedServices = services;
+        if (typeof services === 'string') {
+            processedServices = services.split('\n').filter(s => s.trim()).map(s => s.trim());
+        } else if (!Array.isArray(services)) {
+            processedServices = [];
+        }
+
         // Set company information
-        await generator.setCompanyInfo(companyName, website, services, industry);
+        await generator.setCompanyInfo(companyName, website, processedServices, industry);
 
         // Generate calendar
         const calendar = await generator.generateCalendar(startDate, endDate, countryCode);

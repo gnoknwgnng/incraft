@@ -158,9 +158,12 @@ class LinkedInPostGenerator {
 
     async generateHashtags(companyName, services, industry) {
         try {
+            // Ensure services is an array
+            const servicesArray = Array.isArray(services) ? services : (services ? [services] : []);
+            
             const prompt = `Generate 8-10 relevant professional hashtags for a LinkedIn post about:
 Company: ${companyName}
-Services: ${services?.join(', ') || ''}
+Services: ${servicesArray.join(', ') || ''}
 Industry: ${industry || 'Business'}
 
 Requirements:
@@ -211,7 +214,7 @@ Requirements:
 
 Company: ${this.companyInfo.name || 'Our Company'}
 Website: ${this.companyInfo.website || ''}
-Services: ${this.companyInfo.services?.join(', ') || ''}
+Services: ${Array.isArray(this.companyInfo.services) ? this.companyInfo.services.join(', ') : (this.companyInfo.services || '')}
 Industry: ${this.companyInfo.industry || ''}
 Hashtags to include: ${this.companyInfo.hashtags?.map(tag => `#${tag}`).join(' ') || ''}
 
@@ -316,7 +319,7 @@ Visit: ${this.companyInfo.website || ''}
 
 Company: ${this.companyInfo.name || 'Our Company'}
 Website: ${this.companyInfo.website || ''}
-Services: ${this.companyInfo.services?.join(', ') || ''}
+Services: ${Array.isArray(this.companyInfo.services) ? this.companyInfo.services.join(', ') : (this.companyInfo.services || '')}
 Industry: ${this.companyInfo.industry || ''}
 Hashtags to include: ${this.companyInfo.hashtags?.map(tag => `#${tag}`).join(' ') || ''}
 
