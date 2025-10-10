@@ -1,52 +1,76 @@
-# LinkedIn Post Generator
+# PostCraft AI - LinkedIn Content Generator
 
-An automated LinkedIn post calendar generator powered by Groq Cloud API that fetches holiday data from the Nager.Date API and creates engaging posts for both festival days and regular business days.
+A beautiful, modern LinkedIn post calendar generator with AI-powered content creation. Features a stunning web interface with smooth animations and a dedicated generator page for the best user experience.
 
-## Features
+## ✨ Features
 
-- 🤖 **AI-Powered Content**: Uses Groq Cloud API with OpenAI GPT-OSS-20B model for intelligent content generation
-- 🎉 **Festival Posts**: Automatically generates themed posts for holidays and special occasions
-- 💼 **Business Posts**: Creates engaging content for regular business days
-- 🏷️ **Auto-Generated Hashtags**: AI creates relevant hashtags based on your company and industry
-- 🌍 **Multi-Country Support**: Works with holidays from different countries
-- 🚀 **API Ready**: Built with Express.js for easy deployment
-- 📅 **Date Range Flexibility**: Generate posts for any date range
-- 🎨 **Customizable**: Easy to customize company information and post templates
+### 🎨 **Beautiful Web Interface**
+- Modern glass morphism design with gradient backgrounds
+- Smooth animations and transitions
+- Responsive design for all devices
+- Clean, minimal UI inspired by modern web apps
 
-## Installation
+### 🤖 **AI-Powered Content Creation**
+- Uses Groq Cloud API with advanced language models
+- Intelligent content generation based on your business context
+- Auto-generated hashtags and engagement optimization
+- Context-aware posts that match your brand voice
 
+### 🎉 **Smart Content Types**
+- **Festival Posts**: Themed content for holidays and special occasions
+- **Business Posts**: Engaging content for regular business days
+- **Industry-Specific**: Tailored content based on your industry
+- **Multi-Format**: Various post styles and formats
+
+### 🌍 **Global Support**
+- Multi-country holiday support (US, UK, Canada, Australia, etc.)
+- Localized content and cultural awareness
+- Timezone and date format handling
+
+### 📱 **User Experience**
+- Dedicated generator page with step-by-step form
+- Real-time preview and editing capabilities
+- Export options (PDF, CSV)
+- Copy-to-clipboard functionality
+- Mobile-optimized interface
+
+## 🚀 Quick Start
+
+### 1. Installation
 ```bash
+git clone https://github.com/gnoknwgnng/incraft.git
+cd incraft
 npm install
 ```
 
-## Usage
-
-### As a Node.js Module
-
-```javascript
-const LinkedInPostGenerator = require('./linkedinPostGenerator');
-
-const generator = new LinkedInPostGenerator();
-
-// Set your company information
-generator.setCompanyInfo(
-    'Your Company Name',
-    'https://yourwebsite.com',
-    ['Service 1', 'Service 2', 'Service 3'],
-    ['hashtag1', 'hashtag2', 'hashtag3']
-);
-
-// Generate calendar
-const calendar = await generator.generateCalendar('2025-10-01', '2025-10-31', 'US');
+### 2. Environment Setup
+Create a `.env` file with your Groq API key:
+```env
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
-### As an API Server
-
+### 3. Run the Application
 ```bash
 npm start
 ```
 
-The API will be available at `http://localhost:3000`
+Visit `http://localhost:3000` to access the beautiful web interface!
+
+## 🎯 How to Use
+
+### Web Interface (Recommended)
+1. **Open** `http://localhost:3000` in your browser
+2. **Click** "Generate LinkedIn Posts" button
+3. **Fill** the form with your company details:
+   - Date range for posts
+   - Country for holidays
+   - Company information
+   - Industry and services
+4. **Generate** and view your posts
+5. **Copy, edit, or export** your content
+
+### API Usage
+The application also provides a REST API for developers:
 
 ### API Endpoints
 
