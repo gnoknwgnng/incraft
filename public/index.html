@@ -16,9 +16,7 @@
 
         html {
             overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(6, 182, 212, 0.3) transparent;
-            /* Smooth scrolling performance */
+            scrollbar-width: none; /* Firefox */
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
@@ -29,22 +27,15 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Custom scrollbar for webkit browsers */
+        /* Hide scrollbar for webkit browsers */
         ::-webkit-scrollbar {
-            width: 6px;
+            display: none;
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(6, 182, 212, 0.4);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(6, 182, 212, 0.6);
+        /* Hide scrollbar for IE, Edge and Firefox */
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
 
         /* Reduce motion for better performance */
@@ -58,7 +49,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(90deg, #0c1420 0%, #1a2332 20%, #2c4a52 40%, #0891b2 60%, #06b6d4 80%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
             background-attachment: fixed;
             color: #ffffff;
             min-height: 100vh;
@@ -72,45 +63,96 @@
             will-change: scroll-position;
         }
 
-        /* Decorative geometric shapes - Updated for gradient background */
+        /* Background Orbs similar to Comet */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        /* Decorative orbs similar to Comet browser */
         .shape {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
+            filter: blur(40px);
         }
 
         .shape-1 {
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(120, 119, 198, 0.4) 0%, rgba(120, 119, 198, 0.1) 40%, transparent 70%);
             top: -300px;
-            right: -300px;
-            animation: float 20s ease-in-out infinite;
+            left: -300px;
+            animation: orb1Float 25s ease-in-out infinite;
         }
 
         .shape-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(14, 116, 144, 0.15) 0%, transparent 70%);
-            bottom: -200px;
-            left: -200px;
-            animation: float 25s ease-in-out infinite reverse;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 119, 48, 0.4) 0%, rgba(255, 119, 48, 0.1) 40%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: orb2Float 30s ease-in-out infinite reverse;
         }
 
         .shape-3 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            top: 40%;
-            right: 5%;
-            animation: float 30s ease-in-out infinite;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.3) 0%, rgba(34, 197, 94, 0.1) 40%, transparent 70%);
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: orb3Float 20s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
+        .shape-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
+            top: 60%;
+            right: -175px;
+            animation: orb4Float 35s ease-in-out infinite;
+        }
+
+        @keyframes orb1Float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(100px, 20px) scale(0.9); }
+            75% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        @keyframes orb2Float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-40px, 60px) scale(1.2); }
+            66% { transform: translate(-80px, -20px) scale(0.8); }
+        }
+
+        @keyframes orb3Float {
+            0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+            50% { transform: translateX(-50%) translateY(-40px) scale(1.1); }
+        }
+
+        @keyframes orb4Float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-60px, -40px) scale(0.9); }
+            50% { transform: translate(-30px, 30px) scale(1.15); }
+            75% { transform: translate(-90px, 10px) scale(0.95); }
         }
 
         /* Spectacular Intro Page Styles */
@@ -120,19 +162,31 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(90deg, #0c1420 0%, #1a2332 20%, #2c4a52 40%, #0891b2 60%, #06b6d4 80%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             overflow: hidden;
-            animation: introPageExit 1.5s ease 6s forwards;
+            animation: introPageExit 0.8s ease 2.5s forwards;
+        }
+
+        .intro-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.3) 0%, transparent 50%);
+            z-index: -1;
         }
 
         @keyframes introPageExit {
             0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 0; transform: scale(1.2); visibility: hidden; }
+            100% { opacity: 0; transform: scale(1.05); visibility: hidden; }
         }
 
         /* Animated Background Particles */
@@ -152,14 +206,9 @@
             animation: particleFloat 8s linear infinite;
         }
 
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 6s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 1s; animation-duration: 8s; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 2s; animation-duration: 7s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 0.5s; animation-duration: 9s; }
-        .particle:nth-child(5) { left: 60%; animation-delay: 1.5s; animation-duration: 6s; }
-        .particle:nth-child(6) { left: 70%; animation-delay: 2.5s; animation-duration: 8s; }
-        .particle:nth-child(7) { left: 80%; animation-delay: 3s; animation-duration: 7s; }
-        .particle:nth-child(8) { left: 90%; animation-delay: 3.5s; animation-duration: 9s; }
+        .particle:nth-child(1) { left: 20%; animation-delay: 0s; animation-duration: 4s; }
+        .particle:nth-child(2) { left: 50%; animation-delay: 1s; animation-duration: 5s; }
+        .particle:nth-child(3) { left: 80%; animation-delay: 2s; animation-duration: 4.5s; }
 
         @keyframes particleFloat {
             0% { 
@@ -174,52 +223,7 @@
             }
         }
 
-        /* Gradient Orbs */
-        .gradient-orbs {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            animation: orbFloat 4s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.3), transparent);
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent);
-            top: 60%;
-            right: 20%;
-            animation-delay: 1s;
-        }
-
-        .orb-3 {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(14, 116, 144, 0.3), transparent);
-            bottom: 30%;
-            left: 60%;
-            animation-delay: 2s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
 
         /* Main Intro Content */
         .intro-content {
@@ -231,22 +235,18 @@
         /* Logo Container with Rings */
         .intro-logo-container {
             position: relative;
-            margin-bottom: 3rem;
-            animation: logoEntrance 2s ease 0.5s both;
+            margin-bottom: 2rem;
+            animation: logoEntrance 0.8s ease 0.2s both;
         }
 
         @keyframes logoEntrance {
             0% { 
                 opacity: 0; 
-                transform: scale(0.3) rotate(-180deg);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1.1) rotate(-90deg);
+                transform: scale(0.8);
             }
             100% { 
                 opacity: 1; 
-                transform: scale(1) rotate(0deg);
+                transform: scale(1);
             }
         }
 
@@ -342,13 +342,13 @@
             position: relative;
         }
 
-        .letter:nth-child(1) { animation-delay: 2.5s; }
-        .letter:nth-child(2) { animation-delay: 2.7s; }
-        .letter:nth-child(3) { animation-delay: 2.9s; }
-        .letter:nth-child(4) { animation-delay: 3.1s; }
-        .letter:nth-child(5) { animation-delay: 3.3s; }
-        .letter:nth-child(7) { animation-delay: 3.5s; }
-        .letter:nth-child(8) { animation-delay: 3.7s; }
+        .letter:nth-child(1) { animation-delay: 0.8s; }
+        .letter:nth-child(2) { animation-delay: 0.9s; }
+        .letter:nth-child(3) { animation-delay: 1.0s; }
+        .letter:nth-child(4) { animation-delay: 1.1s; }
+        .letter:nth-child(5) { animation-delay: 1.2s; }
+        .letter:nth-child(7) { animation-delay: 1.3s; }
+        .letter:nth-child(8) { animation-delay: 1.4s; }
 
         @keyframes letterDrop {
             0% { 
@@ -378,12 +378,12 @@
 
         /* Animated Tagline */
         .intro-tagline {
-            margin-bottom: 4rem;
-            animation: taglineSlide 1s ease 4s both;
+            margin-bottom: 2rem;
+            animation: taglineSlide 0.6s ease 1.6s both;
         }
 
         @keyframes taglineSlide {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -402,12 +402,12 @@
             animation: wordFade 0.6s ease both;
         }
 
-        .word:nth-child(1) { animation-delay: 4.2s; }
-        .word:nth-child(2) { animation-delay: 4.4s; color: #06b6d4; font-weight: 600; }
-        .word:nth-child(3) { animation-delay: 4.6s; }
-        .word:nth-child(4) { animation-delay: 4.8s; }
-        .word:nth-child(5) { animation-delay: 5.0s; color: #0891b2; font-weight: 500; }
-        .word:nth-child(6) { animation-delay: 5.2s; }
+        .word:nth-child(1) { animation-delay: 1.8s; }
+        .word:nth-child(2) { animation-delay: 1.9s; color: #06b6d4; font-weight: 600; }
+        .word:nth-child(3) { animation-delay: 2.0s; }
+        .word:nth-child(4) { animation-delay: 2.1s; }
+        .word:nth-child(5) { animation-delay: 2.2s; color: #0891b2; font-weight: 500; }
+        .word:nth-child(6) { animation-delay: 2.3s; }
 
         @keyframes wordFade {
             from { opacity: 0; transform: scale(0.8); }
@@ -416,11 +416,11 @@
 
         /* Advanced Loading Animation */
         .intro-loader-container {
-            animation: loaderEntrance 1s ease 5.5s both;
+            animation: loaderEntrance 0.5s ease 2.4s both;
         }
 
         @keyframes loaderEntrance {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -521,17 +521,17 @@
 
         /* Main Content Animation */
         .main-content {
-            animation: mainContentEntrance 1.5s ease 7s both;
+            animation: mainContentEntrance 0.8s ease 3.3s both;
         }
 
         @keyframes mainContentEntrance {
             0% { 
                 opacity: 0; 
-                transform: translateY(50px) scale(0.95);
+                transform: translateY(30px);
             }
             100% { 
                 opacity: 1; 
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
 
@@ -614,27 +614,30 @@
         .main {
             position: relative;
             z-index: 10;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem 4rem;
             text-align: center;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .main-title {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: clamp(3.5rem, 8vw, 6rem);
             font-weight: 300;
             line-height: 1.1;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             color: #ffffff;
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .main-title .highlight {
@@ -644,22 +647,22 @@
         }
 
         .cta-button {
-            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            background: #1a1a1a;
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 2.5rem;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 4rem;
+            margin-bottom: 6rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .cta-button::before {
@@ -674,10 +677,10 @@
         }
 
         .cta-button:hover {
-            background: linear-gradient(135deg, #0891b2, #0e7490);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.4);
-            border-color: rgba(255, 255, 255, 0.4);
+            background: #2a2a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .cta-button:hover::before {
@@ -689,34 +692,144 @@
             transition: transform 0.1s;
         }
 
-        /* Feature cards */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
+        /* Preview Section */
+        .preview-section {
             margin-top: 4rem;
+            margin-bottom: 6rem;
         }
 
-        .feature-card {
+        .preview-container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 2rem;
-            text-align: left;
-            transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .preview-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .preview-dot:first-child { background: #ff5f57; }
+        .preview-dot:nth-child(2) { background: #ffbd2e; }
+        .preview-dot:nth-child(3) { background: #28ca42; }
+
+        .preview-title {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        .preview-content {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .preview-mockup {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .preview-highlight {
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        /* Feature cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 6rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main {
+                padding: 4rem 1.5rem 3rem;
+            }
+            
+            .main-title {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+                margin-bottom: 3rem;
+            }
+            
+            .preview-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+            
+            .preview-content {
+                padding: 1.5rem;
+                min-height: 250px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 4rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .cta-button {
+                padding: 0.875rem 2rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .feature-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: #ffffff;
@@ -724,113 +837,12 @@
         }
 
         .feature-description {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-preview {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            animation: fadeIn 0.3s ease;
-        }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translate(-50%, -30%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-subtitle {
-            color: #6b7280;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #6b7280;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .close-btn:hover {
-            background: #f3f4f6;
-            color: #1a1a1a;
-        }
 
         /* Form */
         .form-grid {
@@ -2338,19 +2350,9 @@
             <div class="particle"></div>
             <div class="particle"></div>
             <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
         </div>
         
-        <!-- Animated Gradient Orbs -->
-        <div class="gradient-orbs">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-        </div>
+
         
         <!-- Main Intro Content -->
         <div class="intro-content">
@@ -2413,6 +2415,7 @@
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
         <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
 
     <!-- Header -->
     <header class="header">
@@ -2422,251 +2425,82 @@
                 <span class="logo-text">craft ai</span>
             </div>
             <div class="nav-actions">
-                <button class="download-btn" onclick="openModal()">
+                <a href="generator.html" class="download-btn" style="text-decoration: none;">
                     Generate Posts
-                </button>
+                </a>
             </div>
         </nav>
     </header>
 
     <!-- Main content -->
     <main class="main">
-        <p class="subtitle">AI-powered content creation from PostCraft</p>
+        <p class="subtitle">A new LinkedIn generator from PostCraft</p>
         <h1 class="main-title">
-            The LinkedIn generator that works <span class="highlight">for you</span>
+            The content creator that works <span class="highlight">for you</span>
         </h1>
 
-        <button class="cta-button" onclick="openModal()">
-            Start Creating Content
-        </button>
+        <a href="generator.html" class="cta-button" style="text-decoration: none; display: inline-flex;">
+            <span>⬇</span> Generate LinkedIn Posts
+        </a>
+
+        <!-- Preview Section -->
+        <div class="preview-section">
+            <div class="preview-container">
+                <div class="preview-header">
+                    <div class="preview-dots">
+                        <div class="preview-dot"></div>
+                        <div class="preview-dot"></div>
+                        <div class="preview-dot"></div>
+                    </div>
+                    <div class="preview-title">LinkedIn Post Generator</div>
+                </div>
+                <div class="preview-content">
+                    <div class="preview-mockup">
+                        <div style="text-align: left; max-width: 500px;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">🎉 Holiday Post • December 25, 2024</div>
+                                <div style="font-size: 1.1rem; line-height: 1.6;">
+                                    🎄 <span class="preview-highlight">Wishing everyone a Merry Christmas!</span> As we celebrate this special day, let's reflect on the year's achievements and look forward to new opportunities ahead.
+                                </div>
+                                <div style="margin-top: 1rem; font-size: 0.9rem; color: #06b6d4;">
+                                    #Christmas #Gratitude #TeamWork #Success
+                                </div>
+                            </div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.5);">
+                                ✨ Generated with AI • Optimized for engagement
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Features -->
         <div class="features">
             <div class="feature-card">
-                <h3 class="feature-title">AI that understands</h3>
+                <h3 class="feature-title">🤖 Smart Content Creation</h3>
                 <p class="feature-description">
-                    Our advanced AI analyzes your business context and creates posts that resonate with your audience
-                    and reflect your brand voice.
+                    AI analyzes your business and creates engaging LinkedIn posts that match your brand voice and audience.
                 </p>
-                <div class="feature-preview">
-                    <div style="text-align: left; width: 100%;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
-                            <div style="height: 4px; background: #e5e7eb; border-radius: 2px; flex: 1;"></div>
-                        </div>
-                        <div
-                            style="height: 4px; background: #e5e7eb; border-radius: 2px; width: 80%; margin-bottom: 4px;">
-                        </div>
-                        <div
-                            style="height: 4px; background: #e5e7eb; border-radius: 2px; width: 60%; margin-bottom: 4px;">
-                        </div>
-                        <div style="height: 4px; background: #e5e7eb; border-radius: 2px; width: 90%;"></div>
-                    </div>
-                </div>
             </div>
 
             <div class="feature-card">
-                <h3 class="feature-title">AI that organizes</h3>
+                <h3 class="feature-title">📅 Automated Scheduling</h3>
                 <p class="feature-description">
-                    Automatically creates content calendars with holiday posts, business insights, and engagement-driven
-                    content perfectly scheduled.
+                    Generate complete content calendars with holiday posts, business insights, and perfectly timed content.
                 </p>
-                <div class="feature-preview">
-                    <div style="display: flex; gap: 8px; align-items: center; justify-content: center;">
-                        <div
-                            style="width: 32px; height: 32px; background: #2563eb; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">
-                            📅</div>
-                        <div
-                            style="width: 32px; height: 32px; background: #10b981; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">
-                            💼</div>
-                        <div
-                            style="width: 32px; height: 32px; background: #f59e0b; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">
-                            🎯</div>
-                        <div
-                            style="width: 32px; height: 32px; background: #8b5cf6; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">
-                            ✨</div>
-                    </div>
-                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">📊 Performance Optimized</h3>
+                <p class="feature-description">
+                    Every post is crafted for maximum engagement with optimal length, hashtags, and call-to-actions.
+                </p>
             </div>
         </div>
     </main>
 
-    <!-- Modal -->
-    <div class="modal" id="generateModal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
 
-            <div class="modal-header">
-                <h2 class="modal-title">Generate Your LinkedIn Posts</h2>
-                <p class="modal-subtitle">Fill in your details and let AI create amazing content for you</p>
-            </div>
-
-            <form id="postForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Start Date</label>
-                        <input type="date" id="startDate" name="startDate" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">End Date</label>
-                        <input type="date" id="endDate" name="endDate" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Country</label>
-                        <select id="countryCode" name="countryCode" class="form-input">
-                            <option value="AD">Andorra</option>
-                            <option value="AL">Albania</option>
-                            <option value="AM">Armenia</option>
-                            <option value="AR">Argentina</option>
-                            <option value="AT">Austria</option>
-                            <option value="AU">Australia</option>
-                            <option value="AX">Åland Islands</option>
-                            <option value="BA">Bosnia and Herzegovina</option>
-                            <option value="BB">Barbados</option>
-                            <option value="BE">Belgium</option>
-                            <option value="BG">Bulgaria</option>
-                            <option value="BJ">Benin</option>
-                            <option value="BO">Bolivia</option>
-                            <option value="BR">Brazil</option>
-                            <option value="BS">Bahamas</option>
-                            <option value="BW">Botswana</option>
-                            <option value="BY">Belarus</option>
-                            <option value="BZ">Belize</option>
-                            <option value="CA">Canada</option>
-                            <option value="CD">DR Congo</option>
-                            <option value="CG">Congo</option>
-                            <option value="CH">Switzerland</option>
-                            <option value="CL">Chile</option>
-                            <option value="CN">China</option>
-                            <option value="CO">Colombia</option>
-                            <option value="CR">Costa Rica</option>
-                            <option value="CU">Cuba</option>
-                            <option value="CY">Cyprus</option>
-                            <option value="CZ">Czechia</option>
-                            <option value="DE">Germany</option>
-                            <option value="DK">Denmark</option>
-                            <option value="DO">Dominican Republic</option>
-                            <option value="EC">Ecuador</option>
-                            <option value="EE">Estonia</option>
-                            <option value="EG">Egypt</option>
-                            <option value="ES">Spain</option>
-                            <option value="FI">Finland</option>
-                            <option value="FO">Faroe Islands</option>
-                            <option value="FR">France</option>
-                            <option value="GA">Gabon</option>
-                            <option value="GB">United Kingdom</option>
-                            <option value="GD">Grenada</option>
-                            <option value="GE">Georgia</option>
-                            <option value="GG">Guernsey</option>
-                            <option value="GI">Gibraltar</option>
-                            <option value="GL">Greenland</option>
-                            <option value="GM">Gambia</option>
-                            <option value="GR">Greece</option>
-                            <option value="GT">Guatemala</option>
-                            <option value="GY">Guyana</option>
-                            <option value="HK">Hong Kong</option>
-                            <option value="HN">Honduras</option>
-                            <option value="HR">Croatia</option>
-                            <option value="HT">Haiti</option>
-                            <option value="HU">Hungary</option>
-                            <option value="ID">Indonesia</option>
-                            <option value="IE">Ireland</option>
-                            <option value="IM">Isle of Man</option>
-                            <option value="IS">Iceland</option>
-                            <option value="IT">Italy</option>
-                            <option value="JE">Jersey</option>
-                            <option value="JM">Jamaica</option>
-                            <option value="JP">Japan</option>
-                            <option value="KR">South Korea</option>
-                            <option value="KZ">Kazakhstan</option>
-                            <option value="LI">Liechtenstein</option>
-                            <option value="LS">Lesotho</option>
-                            <option value="LT">Lithuania</option>
-                            <option value="LU">Luxembourg</option>
-                            <option value="LV">Latvia</option>
-                            <option value="MA">Morocco</option>
-                            <option value="MC">Monaco</option>
-                            <option value="MD">Moldova</option>
-                            <option value="ME">Montenegro</option>
-                            <option value="MG">Madagascar</option>
-                            <option value="MK">North Macedonia</option>
-                            <option value="MN">Mongolia</option>
-                            <option value="MS">Montserrat</option>
-                            <option value="MT">Malta</option>
-                            <option value="MX">Mexico</option>
-                            <option value="MZ">Mozambique</option>
-                            <option value="NA">Namibia</option>
-                            <option value="NE">Niger</option>
-                            <option value="NG">Nigeria</option>
-                            <option value="NI">Nicaragua</option>
-                            <option value="NL">Netherlands</option>
-                            <option value="NO">Norway</option>
-                            <option value="NZ">New Zealand</option>
-                            <option value="PA">Panama</option>
-                            <option value="PE">Peru</option>
-                            <option value="PG">Papua New Guinea</option>
-                            <option value="PH">Philippines</option>
-                            <option value="PL">Poland</option>
-                            <option value="PR">Puerto Rico</option>
-                            <option value="PT">Portugal</option>
-                            <option value="PY">Paraguay</option>
-                            <option value="RO">Romania</option>
-                            <option value="RS">Serbia</option>
-                            <option value="RU">Russia</option>
-                            <option value="SE">Sweden</option>
-                            <option value="SG">Singapore</option>
-                            <option value="SI">Slovenia</option>
-                            <option value="SJ">Svalbard and Jan Mayen</option>
-                            <option value="SK">Slovakia</option>
-                            <option value="SM">San Marino</option>
-                            <option value="SR">Suriname</option>
-                            <option value="SV">El Salvador</option>
-                            <option value="TN">Tunisia</option>
-                            <option value="TR">Türkiye</option>
-                            <option value="UA">Ukraine</option>
-                            <option value="US" selected>United States</option>
-                            <option value="UY">Uruguay</option>
-                            <option value="VA">Vatican City</option>
-                            <option value="VE">Venezuela</option>
-                            <option value="VN">Vietnam</option>
-                            <option value="ZA">South Africa</option>
-                            <option value="ZW">Zimbabwe</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Company Name</label>
-                        <input type="text" id="companyName" name="companyName" class="form-input"
-                            placeholder="Your Company" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Website URL</label>
-                        <input type="url" id="website" name="website" class="form-input"
-                            placeholder="https://yourcompany.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Industry</label>
-                        <input type="text" id="industry" name="industry" class="form-input"
-                            placeholder="Technology, Healthcare, Finance...">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label">Services (one per line)</label>
-                        <textarea id="services" name="services" class="form-input form-textarea"
-                            placeholder="Web Development&#10;Digital Marketing&#10;Business Consulting"></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    Generate LinkedIn Posts
-                </button>
-            </form>
-        </div>
-    </div>
 
     <!-- Enhanced Loading -->
     <div class="loading" id="loading" style="display: none;">
@@ -2821,55 +2655,11 @@
         document.getElementById('startDate').value = today.toISOString().split('T')[0];
         document.getElementById('endDate').value = nextWeek.toISOString().split('T')[0];
 
-        function openModal() {
-            document.getElementById('generateModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('generateModal').style.display = 'none';
-        }
 
 
 
-        document.getElementById('postForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
 
-            const formData = new FormData(e.target);
-            const data = {
-                startDate: formData.get('startDate'),
-                endDate: formData.get('endDate'),
-                countryCode: formData.get('countryCode'),
-                companyName: formData.get('companyName'),
-                website: formData.get('website'),
-                industry: formData.get('industry'),
-                services: formData.get('services').split('\n').filter(s => s.trim())
-            };
 
-            closeModal();
-            showEnhancedLoading(data);
-
-            try {
-                const response = await fetch('/.netlify/functions/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    showResults(result.calendar);
-                } else {
-                    throw new Error(result.error || 'Failed to generate posts');
-                }
-            } catch (error) {
-                showError(error.message);
-            } finally {
-                hideEnhancedLoading();
-            }
-        });
 
         // Enhanced loading with progress simulation
         function showEnhancedLoading(data) {
@@ -3294,12 +3084,8 @@
 
         // Close edit modal when clicking outside
         window.onclick = function (event) {
-            const modal = document.getElementById('generateModal');
             const editModal = document.getElementById('editModal');
             
-            if (event.target === modal) {
-                closeModal();
-            }
             if (event.target === editModal) {
                 closeEditModal();
             }
